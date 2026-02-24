@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
 
     const TU_EMAIL = 'maycoljhordan07@gmail.com';
     const TU_NUMERO = '+51932387692';
-    const NUMERO_MABEL = '+51999234643';
+    const NUMERO_MABEL = '+51907783529';
 
     // Configurar Gmail
     const transporter = nodemailer.createTransport({
