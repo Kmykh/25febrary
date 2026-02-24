@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
 
     const TU_EMAIL = 'maycoljhordan07@gmail.com';
     const TU_NUMERO = '+51932387692';
-    const NUMERO_MABEL = '+51999234643';
+    const NUMERO_MABEL = '+51932387692';
 
     // Configurar Gmail
     const transporter = nodemailer.createTransport({
@@ -116,7 +116,7 @@ exports.handler = async (event, context) => {
 
       await transporter.sendMail({
         from: '"Invitación Especial 💕" <' + process.env.EMAIL_USER + '>',
-        to: guestEmail,
+        to: 'maycoljhordan07@gmail.com',
         subject: '💕 Tu Reserva está Confirmada - Jueves 26 de Febrero',
         html: emailParaMabel
       });
