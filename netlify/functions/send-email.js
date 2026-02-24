@@ -117,7 +117,7 @@ exports.handler = async (event, context) => {
       await transporter.sendMail({
         from: '"Invitación Especial 💕" <' + process.env.EMAIL_USER + '>',
         to: guestEmail,
-        subject: '💕 Tu Reserva está Confirmada - Domingo 19 de Enero',
+        subject: '💕 Tu Reserva está Confirmada - Jueves 26 de Febrero',
         html: emailParaMabel
       });
 
@@ -156,15 +156,15 @@ exports.handler = async (event, context) => {
               
               <div class="info-row">
                 <span class="label">📅 Fecha</span>
-                <span class="value">Domingo, 19 de Enero 2026</span>
+                <span class="value">Jueves, 26 de Febrero 2026</span>
               </div>
               <div class="info-row">
                 <span class="label">⏰ Hora</span>
-                <span class="value">1:00 PM - 7:00 PM</span>
+                <span class="value">10:00 AM - 10:30 AM</span>
               </div>
               <div class="info-row">
-                <span class="label">🌮 Actividad</span>
-                <span class="value">Tacos y Paseo por el Parque</span>
+                <span class="label">🎁 Sorpresa</span>
+                <span class="value">Un lugar mágico te espera!</span>
               </div>
               <div class="info-row">
                 <span class="label">📧 Su correo</span>
@@ -199,14 +199,14 @@ exports.handler = async (event, context) => {
 
       // ========== SMS PARA TI ==========
       await twilioClient.messages.create({
-        body: `🎉 ¡ELLA HA ACEPTADO! La cita del Domingo 19 de Enero (1-7 PM) está confirmada. Tacos y paseo por el parque. ${mensaje ? 'Su mensaje: "' + mensaje + '"' : '¡Sin mensaje pero aceptó!'}`,
+        body: `🎉 ¡ELLA HA ACEPTADO! La sorpresa del Jueves 26 de Febrero (10-10:30 AM) está confirmada. ${mensaje ? 'Su mensaje: "' + mensaje + '"' : '¡Sin mensaje pero aceptó!'}`,
         messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
         to: TU_NUMERO
       });
 
       // ========== SMS PARA MABEL ==========
       await twilioClient.messages.create({
-        body: '💕 ¡Hola! Tu reserva para el Domingo 19 de Enero (1:00-7:00 PM) está confirmada. Tacos deliciosos y paseo por el parque te esperan. ¡Nos vemos pronto! 🌮🌳',
+        body: '💕 ¡Hola! Tu sorpresa especial para el Jueves 26 de Febrero (10:00-10:30 AM) está confirmada. Un lugar mágico lleno de aventura te espera. ¡Nos vemos pronto! 🎁',
         messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
         to: NUMERO_MABEL
       });

@@ -167,8 +167,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 0;
             z-index: 100;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+            overflow: hidden;
         }
 
         #puzzle-screen.hidden {
@@ -179,8 +181,32 @@
 
         .puzzle-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             animation: fadeInDown 0.8s ease-out;
+            position: relative;
+            padding: 25px 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(247, 140, 162, 0.15);
+        }
+
+        .puzzle-header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f78ca2, #ff9fb2);
+            border-radius: 50%;
+            animation: floatUp 2s ease-in-out infinite;
+        }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
         }
 
         @keyframes fadeInDown {
@@ -196,35 +222,121 @@
 
         .puzzle-title {
             font-family: 'Pacifico', cursive;
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 15px;
+            font-size: 2.3rem;
+            background: linear-gradient(135deg, #f78ca2, #ff9fb2, #ffc4d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(247, 140, 162, 0.3)); }
+            50% { filter: drop-shadow(0 0 15px rgba(247, 140, 162, 0.6)); }
         }
 
         .puzzle-instructions {
             font-family: 'Quicksand', sans-serif;
-            font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 10px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+            font-size: 1.1rem;
+            color: #5a3d4a;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .puzzle-hint {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.1rem;
-            color: var(--rose);
-            font-weight: 600;
+            font-size: 1.15rem;
+            color: #f78ca2;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .puzzle-password-input {
+            width: 320px;
+            padding: 18px 25px;
+            border: 3px solid var(--rose);
+            border-radius: 25px;
+            font-size: 1.8rem;
+            letter-spacing: 0.4em;
+            text-align: center;
+            font-weight: bold;
+            background: white;
+            color: var(--dark);
+            box-shadow: 0 15px 40px rgba(247, 140, 162, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .puzzle-password-input::placeholder {
+            color: #ffb3c6;
+            opacity: 0.8;
+        }
+
+        .puzzle-password-input:focus {
+            outline: none;
+            border-color: #ff9fb2;
+            box-shadow: 0 0 35px rgba(247, 140, 162, 0.6), inset 0 0 15px rgba(247, 140, 162, 0.1);
+            transform: scale(1.08);
+            background: linear-gradient(135deg, rgba(255, 238, 242, 0.5), rgba(255, 212, 216, 0.5));
+        }
+
+        .puzzle-password-input:hover:not(:focus) {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(247, 140, 162, 0.35);
+        }
+
+        .puzzle-password-input.shake {
+            animation: wrongShake 0.5s ease;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(238, 90, 111, 0.1));
         }
 
         .puzzle-wrapper {
             position: relative;
             margin-bottom: 30px;
+            padding: 35px 30px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(247, 140, 162, 0.15);
+            border: 2px solid rgba(255, 159, 178, 0.3);
+            animation: slideUp 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .puzzle-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .puzzle-input-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #f78ca2;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 0.5px;
         }
 
         .puzzle-container {
@@ -417,11 +529,60 @@
         .puzzle-progress-container {
             text-align: center;
             animation: fadeIn 0.8s ease-out 0.5s both;
+            padding: 10px;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        #puzzle-hint-msg {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            margin-top: 15px;
+            min-height: 24px;
+            animation: messageSlide 0.4s ease-out;
+            box-shadow: 0 5px 20px rgba(247, 140, 162, 0.2);
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #unlock-message {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
+            animation: successPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes successPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .puzzle-progress {
@@ -475,7 +636,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, #ffeef2 0%, #ffd4d8 50%, #ffcce0 100%);
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 200;
@@ -485,6 +646,7 @@
         }
 
         #letter-opening.show {
+            display: flex;
             opacity: 1;
             visibility: visible;
             animation: fadeInBg 0.8s ease;
@@ -928,29 +1090,52 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 450px;
             max-width: 90%;
             background: white;
             padding: 0;
             z-index: 1000;
-            border-radius: 25px;
+            border-radius: 35px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.25);
             overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .custom-modal.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .modal-header {
-            background: linear-gradient(135deg, var(--rose) 0%, var(--pink) 100%);
-            padding: 30px 20px 25px;
+            background: linear-gradient(135deg, #f78ca2 0%, #ff9fb2 50%, #ffc4d6 100%);
+            padding: 40px 30px 35px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
         }
 
         .modal-header h2 {
             font-family: 'Pacifico', cursive;
             color: white;
-            font-size: 1.8rem;
-            margin: 0 0 8px 0;
+            font-size: 2rem;
+            margin: 0 0 12px 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .modal-header .subtitle {
@@ -958,46 +1143,70 @@
             font-size: 1rem;
             margin: 0;
             font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
         }
 
         .modal-body {
-            padding: 30px 25px;
-            background: var(--cream);
+            padding: 45px 35px;
+            background: linear-gradient(180deg, #fff5f7 0%, #ffffff 100%);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .modal-body p {
-            color: var(--dark);
-            font-size: 1rem;
+            color: #5a3d4a;
+            font-size: 1.05rem;
             margin-bottom: 20px;
             line-height: 1.6;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .modal-body p:last-of-type {
+            margin-bottom: 0;
         }
 
         .modal-body label {
             display: block;
             text-align: left;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--dark);
-            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #f78ca2;
+            margin-bottom: 12px;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 0.5px;
         }
 
         .modal-overlay {
             display: none;
             position: fixed;
             top:0; left:0; width:100%; height:100%;
-            background: rgba(90, 61, 74, 0.5);
-            backdrop-filter: blur(5px);
+            background: rgba(90, 61, 74, 0.6);
+            backdrop-filter: blur(8px);
             z-index: 999;
+            animation: overlayFade 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        @keyframes overlayFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .input-royal {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--pink);
-            border-radius: 15px;
+            padding: 16px 18px;
+            border: 2px solid #ff9fb2;
+            border-radius: 18px;
             font-family: 'Quicksand', sans-serif;
             font-size: 1rem;
-            margin: 8px 0 18px;
+            margin: 8px 0 20px;
             box-sizing: border-box;
             background: white;
             color: var(--dark);
@@ -1006,16 +1215,17 @@
 
         .input-royal:focus {
             outline: none;
-            border-color: var(--rose);
-            box-shadow: 0 0 15px rgba(247, 140, 162, 0.3);
+            border-color: #f78ca2;
+            box-shadow: 0 0 20px rgba(247, 140, 162, 0.4), inset 0 0 10px rgba(247, 140, 162, 0.1);
+            transform: translateY(-2px);
         }
 
         .textarea-royal {
             width: 100%;
-            height: 90px;
-            border: 2px solid var(--pink);
-            border-radius: 15px;
-            padding: 14px 16px;
+            height: 110px;
+            border: 2px solid #ff9fb2;
+            border-radius: 18px;
+            padding: 16px 18px;
             font-family: 'Quicksand', sans-serif;
             font-size: 1rem;
             box-sizing: border-box;
@@ -1023,49 +1233,57 @@
             color: var(--dark);
             resize: none;
             transition: all 0.3s ease;
-            margin: 8px 0 18px;
+            margin: 8px 0 20px;
         }
 
         .textarea-royal:focus {
             outline: none;
-            border-color: var(--rose);
-            box-shadow: 0 0 15px rgba(247, 140, 162, 0.3);
+            border-color: #f78ca2;
+            box-shadow: 0 0 20px rgba(247, 140, 162, 0.4), inset 0 0 10px rgba(247, 140, 162, 0.1);
+            transform: translateY(-2px);
         }
 
         .btn-royal {
             font-family: 'Quicksand', sans-serif;
-            padding: 14px 35px;
+            padding: 15px 40px;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            background: linear-gradient(135deg, var(--rose) 0%, var(--pink) 100%);
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #f78ca2 0%, #ff9fb2 100%);
             color: white;
-            box-shadow: 0 6px 20px rgba(247, 140, 162, 0.3);
+            box-shadow: 0 8px 25px rgba(247, 140, 162, 0.35);
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-royal:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(247, 140, 162, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(247, 140, 162, 0.5);
         }
 
         .btn-royal:active {
-            transform: translateY(0);
+            transform: translateY(-2px);
+        }
+
+        .btn-royal:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .btn-royal.btn-secondary {
-            background: transparent;
-            color: var(--rose);
-            border: 2px solid var(--rose);
-            box-shadow: none;
+            background: white;
+            color: #f78ca2;
+            border: 2px solid #f78ca2;
+            box-shadow: 0 4px 15px rgba(247, 140, 162, 0.2);
         }
 
         .btn-royal.btn-secondary:hover {
             background: rgba(247, 140, 162, 0.1);
-            box-shadow: none;
+            box-shadow: 0 8px 25px rgba(247, 140, 162, 0.3);
         }
 
         .success-msg {
@@ -1139,16 +1357,16 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
-            width: 380px;
+            width: 480px;
             max-width: 90%;
             background: white;
             z-index: 1001;
-            border-radius: 25px;
+            border-radius: 40px;
             text-align: center;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.3);
             overflow: hidden;
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .success-modal.show {
@@ -1158,62 +1376,93 @@
         }
 
         .success-modal-header {
-            background: linear-gradient(135deg, #2d7a2d, #1e5a1e);
-            padding: 30px 20px;
+            background: linear-gradient(135deg, #f78ca2, #ff9fb2, #ffc4d6);
+            padding: 45px 30px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .success-modal-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
         }
 
         .success-icon {
-            font-size: 60px;
-            margin-bottom: 10px;
+            font-size: 70px;
+            margin-bottom: 15px;
+            animation: successBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0) rotate(-180deg); }
+            100% { transform: scale(1) rotate(0deg); }
         }
 
         .success-modal-header h2 {
             font-family: 'Pacifico', cursive;
             color: white;
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 2;
         }
 
         .success-modal-body {
-            padding: 30px 25px;
-            background: var(--cream);
+            padding: 50px 35px;
+            background: linear-gradient(180deg, #fff5f7 0%, #ffffff 100%);
         }
 
         .success-modal-body p {
-            color: var(--dark);
-            font-size: 1.05rem;
-            margin: 0 0 15px;
-            line-height: 1.6;
+            color: #5a3d4a;
+            font-size: 1.1rem;
+            margin: 0 0 20px;
+            line-height: 1.7;
+            font-family: 'Quicksand', sans-serif;
         }
 
         .success-modal-body .highlight {
-            background: linear-gradient(135deg, var(--rose) 0%, var(--pink) 100%);
+            background: linear-gradient(135deg, #f78ca2 0%, #ff9fb2 100%);
             color: white;
-            padding: 15px 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            font-weight: 600;
+            padding: 25px 25px;
+            border-radius: 20px;
+            margin: 30px 0;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            box-shadow: 0 10px 30px rgba(247, 140, 162, 0.3);
         }
 
         .btn-close-success {
             font-family: 'Quicksand', sans-serif;
-            padding: 12px 40px;
+            padding: 16px 50px;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            background: linear-gradient(135deg, var(--rose), var(--pink));
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #f78ca2, #ff9fb2);
             color: white;
-            box-shadow: 0 4px 15px rgba(247, 140, 162, 0.3);
+            box-shadow: 0 10px 30px rgba(247, 140, 162, 0.35);
             transition: all 0.3s ease;
-            margin-top: 15px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-close-success:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 45px rgba(247, 140, 162, 0.5);
+        }
+
+        .btn-close-success:active {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(247, 140, 162, 0.4);
         }
 
         /* Responsivo */
@@ -1310,6 +1559,54 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* MODAL DE MENSAJE DE AMOR */
+        .love-message-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: 500px;
+            max-width: 95%;
+            background: white;
+            padding: 50px 40px;
+            z-index: 1000;
+            border-radius: 35px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(247, 140, 162, 0.3);
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        .love-message-modal.show {
+            display: block;
+        }
+
+        #love-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--dark);
+            text-align: left;
+            min-height: 300px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 239, 242, 0.5) 0%, rgba(255, 212, 216, 0.3) 100%);
+            border-radius: 20px;
+            border-left: 4px solid var(--rose);
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .love-message-modal .btn-royal {
+            margin-top: 15px;
+            background: linear-gradient(135deg, var(--rose) 0%, var(--pink) 100%);
+            padding: 12px 35px;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -1322,39 +1619,29 @@
         <div class="loading-text">Te ha llegado una carta...</div>
     </div>
 
-    <!-- Pantalla del puzzle de corazones -->
-    <div id="puzzle-screen">
-        <div class="puzzle-header">
-            <div class="puzzle-title">Conecta los corazones</div>
-            <div class="puzzle-instructions">Haz clic en el orden correcto (1 → 10)</div>
-            <div class="puzzle-hint">Sigue los números para descubrir tu sorpresa </div>
-        </div>
-        
-        <div class="puzzle-wrapper">
-            <div class="puzzle-container" id="puzzle-container">
-                <div class="heart-piece" data-number="1" onclick="selectHeart(this)">MI</div>
-                <div class="heart-piece" data-number="2" onclick="selectHeart(this)">AMOR</div>
-                <div class="heart-piece" data-number="3" onclick="selectHeart(this)">TE</div>
-                <div class="heart-piece" data-number="4" onclick="selectHeart(this)">INVITO</div>
-                <div class="heart-piece" data-number="5" onclick="selectHeart(this)">A</div>
-                <div class="heart-piece" data-number="6" onclick="selectHeart(this)">UNA</div>
-                <div class="heart-piece" data-number="7" onclick="selectHeart(this)">CITA</div>
-                <div class="heart-piece" data-number="8" onclick="selectHeart(this)">MUY</div>
-                <div class="heart-piece" data-number="9" onclick="selectHeart(this)">ESPECIAL</div>
-                <div class="heart-piece" data-number="10" onclick="selectHeart(this)">CONMIGO</div>
+<!-- Pantalla del puzzle de contraseña -->
+        <div id="puzzle-screen">
+            <div class="puzzle-header">
+                <div class="puzzle-title">🔐 Desbloquea tu Sorpresa</div>
+                <div class="puzzle-instructions">Ingresa el código mágico de 8 dígitos</div>
+                <div class="puzzle-hint">💝 Pista: Nuestras fechas de cumpleaños unidas 💕</div>
+            </div>
+            
+            <div class="puzzle-wrapper">
+                <div class="puzzle-input-wrapper">
+                    <div class="puzzle-input-label">Tu Código Secreto:</div>
+                    <input type="password" id="puzzle-input" class="puzzle-password-input" placeholder="• • • • • • • •" maxlength="8" onkeyup="checkPasswordPuzzle(event)">
+                    <p id="puzzle-hint-msg" style="color: #f78ca2; font-size: 0.9rem; margin-top: 15px; min-height: 20px; display: block;"></p>
+                </div>
+            </div>
+            
+            <div class="puzzle-progress-container" style="margin-top: 15px;">
+                <div id="unlock-message" style="display: none;">✓ ¡Correcto! Abriendo tu sorpresa...</div>
             </div>
         </div>
         
-        <div class="puzzle-progress-container">
-            <div class="puzzle-progress">
-                Progreso: <span id="puzzle-progress">0</span> / 10
-            </div>
-            <div class="encouragement-message" id="encouragement-message"></div>
-        </div>
-    </div>
-
-    <!-- Animación de carta abriéndose -->
-    <div id="letter-opening">
+        <!-- Animación de carta abriéndose -->
+        <div id="letter-opening">
         <!-- Sobre con carta -->
         <div class="envelope-container">
             <div class="envelope-back"></div>
@@ -1376,38 +1663,38 @@
     <div class="card-container" id="card-container">
         <div class="invitation-card">
             <div class="letter-header">
-                Enero 14, 2026
+                Febrero 23, 2026
             </div>
             
-            <h1>Una Invitación Especial</h1>
-            <div class="subtitle">Para mi persona favorita</div>
+            <h1>Una Sorpresa Especial</h1>
+            <div class="subtitle">Te tengo una sorpresa 🎁</div>
             
             <p class="message">
-                Me encantaria pasar tiempo contigo en una salida muy especial. He pensado en algo delicioso y divertido para compartir juntos.
+                Tengo algo muy especial planeado para ti. Es una sorpresa, así que necesitarás descifrar el código para saber más. ¿Te atreves?
             </p>
             
             <div class="invitation-details">
                 <div class="detail-item">
                     <div class="detail-icon"></div>
                     <div class="detail-text">
-                        <span class="detail-title">TACOS DELICIOSOS</span>
-                        <span>Una comida rica para compartir</span>
+                        <span class="detail-title">🎁 UNA SORPRESA</span>
+                        <span>Algo muy emocionante te espera</span>
                     </div>
                 </div>
                 
                 <div class="detail-item">
                     <div class="detail-icon"></div>
                     <div class="detail-text">
-                        <span class="detail-title">PASEO POR EL PARQUE</span>
-                        <span>Caminar juntos bajo los arboles</span>
+                        <span class="detail-title">🌟 LUGAR MISTERIOSO</span>
+                        <span>¡Un lugar lleno de magia y aventura!</span>
                     </div>
                 </div>
                 
                 <div class="detail-item">
                     <div class="detail-icon"></div>
                     <div class="detail-text">
-                        <span class="detail-title">FECHA Y HORA</span>
-                        <span>Lunes 19 de Enero, 1:00 PM - 7:00 PM</span>
+                        <span class="detail-title">📅 FECHA Y HORA</span>
+                        <span>Jueves 26 de Febrero, 10:00 AM - 10:30 AM</span>
                     </div>
                 </div>
             </div>
@@ -1456,7 +1743,7 @@
         
         <div class="modal-body">
             <p>Me haría muy feliz pasar este tiempo contigo...</p>
-            <p style="font-size: 0.95rem; color: #8b7d82; margin-top: 10px;">Los tacos nos esperan y el parque está lindo.</p>
+            <p style="font-size: 0.95rem; color: #8b7d82; margin-top: 10px;">Estoy seguro que la sopresa te va a gustar</p>
             
             <div style="display: flex; gap: 12px; justify-content: center; margin-top: 25px;">
                 <button class="btn-royal" onclick="closeDecline()">Esta bien, acepto</button>
@@ -1483,189 +1770,146 @@
         </div>
     </div>
 
+    <!-- Modal de mensaje de amor con efecto typewriter -->
+    <div class="love-message-modal" id="love-message-modal">
+        <div id="love-message"></div>
+        <button class="btn-royal" onclick="closeLoveMessageAndShowBooking()">Continuar ♥</button>
+    </div>
+
     <!-- Modal de éxito -->
     <div class="success-modal" id="success-modal">
         <div class="success-modal-header">
-            <h2>Confirmado</h2>
+            <h2>¡Confirmado! 🎉</h2>
         </div>
         <div class="success-modal-body">
-            <p>Revisa tu correo para ver los detalles de nuestra salida</p>
+            <p>Revisa tu correo para ver los detalles de nuestra sorpresa especial</p>
             
             <div class="highlight">
-                Tacos y Paseo por el Parque<br>
-                Domingo 19 de Enero<br>
-                1:00 PM - 7:00 PM
+                Una Sorpresa Especial ✨<br>
+                Jueves 26 de Febrero<br>
+                10:00 AM - 7:00 PM<br>
+                📍 Lugar Misterioso
             </div>
             
-            <p style="font-size: 0.95rem;">No puedo esperar para vernos</p>
+            <p style="font-size: 0.95rem;">¡No puedo esperar para verte y darte la sorpresa! 💕</p>
             
             <button class="btn-close-success" onclick="closeSuccessModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Modal de mensaje médico -->
+    <div class="success-modal" id="medical-modal">
+        <div class="success-modal-header" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+            <h2>📋 Aviso Importante</h2>
+        </div>
+        <div class="success-modal-body">
+            <p style="font-size: 1.1rem; color: #2c3e50;">Actualmente estoy en <strong>atención médica</strong> recuperándome del pie 🦵</p>
+            
+            <div class="highlight" style="background: linear-gradient(135deg, #ecf0f1, #bdc3c7); color: #2c3e50; border-left: 5px solid #3498db;">
+                Me estoy recuperando poco a poco<br>
+                No puedo caminar mucho todavía<br>
+                Pero te tengo una sorpresa especial 💝
+            </div>
+            
+            <p style="font-size: 0.95rem;">Gracias por tu comprensión y paciencia 🙏</p>
+            
+            <button class="btn-close-success" onclick="closeMedicalModal()">Entendido 💪</button>
         </div>
     </div>
     <script>
         const YOUR_EMAIL = 'maycoljhorda07@gmail.com';
         const API_URL = '/.netlify/functions/send-email';
-
-        let currentStep = 0;
-        const totalSteps = 10;
-        let randomOrder = [];
-        const encouragements = [
-            "¡Muy bien! Sigue así ",
-            "¡Perfecto! Vas excelente ",
-            "¡Increíble! Continúa ",
-            "¡Genial! Cada vez más cerca ",
-            "¡Excelente! A mitad de camino ",
-            "¡Fantástico! Ya casi ",
-            "¡Maravilloso! No te detengas ",
-            "¡Impresionante! Solo tres más ",
-            "¡Casi ahí! Uno más ",
-            "¡Lo lograste! Eres increíble "
-        ];
-
-        // Función para mezclar el orden de los números
-        function shuffleNumbers() {
-            randomOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            for (let i = randomOrder.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [randomOrder[i], randomOrder[j]] = [randomOrder[j], randomOrder[i]];
-            }
-            
-            // Asignar números aleatorios a los corazones
-            const hearts = document.querySelectorAll('.heart-piece');
-            hearts.forEach((heart, index) => {
-                heart.setAttribute('data-number', randomOrder[index]);
-            });
-        }
-        
-        // Función para reorganizar solo las piezas no seleccionadas
-        function reorganizeRemaining() {
-            const hearts = document.querySelectorAll('.heart-piece:not(.correct)');
-            const remainingNumbers = [];
-            
-            hearts.forEach(heart => {
-                remainingNumbers.push(parseInt(heart.getAttribute('data-number')));
-            });
-            
-            // Mezclar los números restantes
-            for (let i = remainingNumbers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [remainingNumbers[i], remainingNumbers[j]] = [remainingNumbers[j], remainingNumbers[i]];
-            }
-            
-            // Reasignar los números mezclados
-            hearts.forEach((heart, index) => {
-                heart.setAttribute('data-number', remainingNumbers[index]);
-            });
-        }
+        const CORRECT_PASSWORD = '22110709'; // Contraseña: fecha de cumpleaños
 
         // Animación de carga inicial
         window.addEventListener('load', function() {
-            shuffleNumbers(); // Mezclar números antes de mostrar
             setTimeout(() => {
                 document.getElementById('loading-screen').classList.add('hidden');
-                // Marcar el primer corazón como "waiting"
-                updateWaitingHeart();
             }, 3000);
         });
 
-        // Función para actualizar el corazón que está esperando
-        function updateWaitingHeart() {
-            // Remover clase waiting de todos
-            document.querySelectorAll('.heart-piece').forEach(heart => {
-                heart.classList.remove('waiting');
-            });
-            
-            // Agregar waiting al siguiente corazón
-            if (currentStep < totalSteps) {
-                const nextHeart = document.querySelector(`[data-number="${currentStep + 1}"]`);
-                if (nextHeart && !nextHeart.classList.contains('correct')) {
-                    nextHeart.classList.add('waiting');
-                }
-            }
-        }
+        // Función para verificar la contraseña
+        function checkPasswordPuzzle(event) {
+            const input = document.getElementById('puzzle-input');
+            const hintMsg = document.getElementById('puzzle-hint-msg');
+            const unlockMsg = document.getElementById('unlock-message');
+            const value = input.value;
 
-        // Función para crear partículas de celebración
-        function createParticles(element) {
-            const rect = element.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const particles = ['✨', '💖', '⭐', '💕', '🌟'];
-            
-            for (let i = 0; i < 8; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.textContent = particles[Math.floor(Math.random() * particles.length)];
-                particle.style.left = centerX + 'px';
-                particle.style.top = centerY + 'px';
-                
-                const angle = (Math.PI * 2 * i) / 8;
-                const distance = 100;
-                particle.style.setProperty('--x', Math.cos(angle) * distance + 'px');
-                particle.style.setProperty('--y', Math.sin(angle) * distance + 'px');
-                
-                document.body.appendChild(particle);
-                
-                setTimeout(() => particle.remove(), 1000);
-            }
-        }
+            // Limpiar mensaje anterior
+            hintMsg.textContent = '';
+            input.classList.remove('shake');
 
-        // Función para mostrar mensaje de ánimo
-        function showEncouragement(step) {
-            const message = document.getElementById('encouragement-message');
-            message.textContent = encouragements[step - 1];
-            message.classList.add('show');
-            
-            setTimeout(() => {
-                message.classList.remove('show');
-            }, 2000);
-        }
-
-        // Función para seleccionar corazones en orden
-        function selectHeart(element) {
-            // Obtener el número del atributo data-number del elemento
-            const number = parseInt(element.getAttribute('data-number'));
-            
-            // Verificar si ya fue seleccionado
-            if (element.classList.contains('correct')) {
+            if (value.length === 0) {
+                hintMsg.textContent = '';
+                hintMsg.style.color = '#f78ca2';
                 return;
             }
-            
-            if (number === currentStep + 1) {
-                currentStep++;
-                element.classList.add('correct');
-                element.classList.remove('waiting');
+
+            if (value.length < 8) {
+                const remaining = 8 - value.length;
+                hintMsg.textContent = `${value.length}/8 dígitos... ${remaining} más 👀`;
+                hintMsg.style.color = '#f78ca2';
+                return;
+            }
+
+            if (value === CORRECT_PASSWORD) {
+                hintMsg.textContent = '✓ ¡Correcto! 🎉';
+                hintMsg.style.color = '#2ecc71';
+                hintMsg.style.fontWeight = '700';
+                hintMsg.style.fontSize = '1.1rem';
+                unlockMsg.style.display = 'block';
+                input.disabled = true;
+                input.style.background = 'linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1))';
+                input.style.borderColor = '#2ecc71';
                 
-                // Crear partículas de celebración
-                createParticles(element);
+                // Efecto de celebración
+                createConfetti();
                 
-                // Actualizar progreso
-                document.getElementById('puzzle-progress').textContent = currentStep;
-                
-                // Mostrar mensaje de ánimo
-                showEncouragement(currentStep);
-                
-                // Reorganizar las piezas restantes (excepto en el último paso)
-                if (currentStep < totalSteps) {
-                    setTimeout(() => {
-                        reorganizeRemaining();
-                        updateWaitingHeart();
-                    }, 600);
-                } else {
-                    updateWaitingHeart();
-                }
-                
-                if (currentStep === totalSteps) {
-                    setTimeout(() => {
-                        completePuzzle();
-                    }, 1000);
-                }
-            } else {
-                // Retroalimentación visual de error
-                element.classList.add('wrong');
                 setTimeout(() => {
-                    element.classList.remove('wrong');
+                    completePuzzle();
+                }, 2000);
+            } else {
+                hintMsg.textContent = '✗ Código incorrecto, intenta de nuevo';
+                hintMsg.style.color = '#e74c3c';
+                hintMsg.style.fontWeight = '600';
+                input.classList.add('shake');
+                
+                // Añadir efecto visual de error
+                input.style.borderColor = '#e74c3c';
+                setTimeout(() => {
+                    input.style.borderColor = 'var(--rose)';
                 }, 500);
+                
+                // Limpiar entrada después de error
+                setTimeout(() => {
+                    input.value = '';
+                    hintMsg.textContent = '';
+                }, 600);
+            }
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('puzzle-screen');
+            const confetti = ['🎉', '🎊', '💕', '✨', '💖', '⭐', '🌟', '💝', '🔓', '💫'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.textContent = confetti[Math.floor(Math.random() * confetti.length)];
+                    particle.style.left = (Math.random() * 100) + '%';
+                    particle.style.top = '50%';
+                    particle.style.fontSize = (15 + Math.random() * 25) + 'px';
+                    
+                    const angle = (Math.PI * 2 * i) / 30;
+                    const distance = 200 + Math.random() * 100;
+                    particle.style.setProperty('--x', Math.cos(angle) * distance + 'px');
+                    particle.style.setProperty('--y', Math.sin(angle) * distance + 'px');
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 1200);
+                }, i * 20);
             }
         }
 
@@ -1744,33 +1988,54 @@
         function showBooking(e) {
             e.stopPropagation();
             document.getElementById('overlay').style.display = 'block';
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('love-message-modal').classList.add('show');
+            startLoveMessageTyping();
+        }
+
+        function closeLoveMessageAndShowBooking() {
+            document.getElementById('love-message-modal').classList.remove('show');
             document.getElementById('modal-booking').style.display = 'block';
+            document.getElementById('modal-booking').classList.add('show');
         }
 
         function confirmDecline(e) {
             e.stopPropagation();
             document.getElementById('overlay').style.display = 'block';
+            document.getElementById('overlay').classList.add('show');
             document.getElementById('modal-decline').style.display = 'block';
+            document.getElementById('modal-decline').classList.add('show');
         }
 
         function closeDecline() {
             document.getElementById('overlay').style.display = 'none';
+            document.getElementById('overlay').classList.remove('show');
             document.getElementById('modal-decline').style.display = 'none';
+            document.getElementById('modal-decline').classList.remove('show');
         }
 
         function showDeclineReason() {
             document.getElementById('modal-decline').style.display = 'none';
+            document.getElementById('modal-decline').classList.remove('show');
             document.getElementById('modal-decline-reason').style.display = 'block';
+            document.getElementById('modal-decline-reason').classList.add('show');
         }
 
         function showSuccessModal() {
             document.getElementById('modal-booking').style.display = 'none';
+            document.getElementById('modal-booking').classList.remove('show');
             document.getElementById('success-modal').classList.add('show');
         }
 
         function closeSuccessModal() {
             document.getElementById('success-modal').classList.remove('show');
+            document.getElementById('medical-modal').classList.add('show');
+        }
+
+        function closeMedicalModal() {
+            document.getElementById('medical-modal').classList.remove('show');
             document.getElementById('overlay').style.display = 'none';
+            document.getElementById('overlay').classList.remove('show');
         }
 
         function validateEmail(email) {
@@ -1822,11 +2087,37 @@
                 console.error('Error:', error);
                 loadingEl.style.display = 'none';
                 
-                const subject = '❤️ ACEPTO LA INVITACIÓN - Tacos y Parque';
-                const body = `¡HE ACEPTADO TU INVITACIÓN! 💕\n\nMi mensaje para ti:\n${message}\n\n---\nLugar: Tacos y paseo por el parque\nFecha: Domingo 19 de Enero, 1:00 PM - 7:00 PM`;
+                const subject = '❤️ ACEPTO LA INVITACIÓN - Sorpresa Especial 26 Febrero';
+                const body = `¡HE ACEPTADO TU INVITACIÓN! 💕\n\nMi mensaje para ti:\n${message}\n\n---\nSorpresa Especial\nJueves 26 de Febrero, 10:00 AM - 10:30 AM`;
                 window.location.href = `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 successEl.style.display = 'block';
             }
+        }
+
+        function startLoveMessageTyping() {
+            const messageDiv = document.getElementById('love-message');
+            messageDiv.innerHTML = ''; // Limpiar contenido anterior
+            
+            const fullMessage = `Amor, quiero que sepas que estos días he sentido muchísimo tu ausencia. Te extraño más de lo que imaginas, en los detalles pequeños, en los silencios, en los momentos en los que quisiera abrazarte sin decir nada. Me haces falta de una forma bonita, de esas que nacen cuando alguien ya ocupa un lugar profundo en el corazón.\n\nEsta salida va a ser diferente a todas las demás… no será solo una cita, será una pequeña aventura. Esta vez tendrás que encontrarme, seguir las pistas, dejarte sorprender. Ya sabrás cómo será cuando llegue el momento, pero te prometo que estará llena de emoción, risas y esa complicidad tan nuestra.\n\nTe amo. Y todo lo que preparo para ti nace exactamente de eso, te amo ratoncita jsjs`;
+            
+            let index = 0;
+            const typingSpeed = 30; // Velocidad de escritura en ms
+            
+            function typeCharacter() {
+                if (index < fullMessage.length) {
+                    const char = fullMessage[index];
+                    if (char === '\\n') {
+                        messageDiv.innerHTML += '<br>';
+                    } else {
+                        messageDiv.innerHTML += char;
+                    }
+                    index++;
+                    messageDiv.scrollTop = messageDiv.scrollHeight; // Auto-scroll
+                    setTimeout(typeCharacter, typingSpeed);
+                }
+            }
+            
+            typeCharacter();
         }
 
         async function sendDeclineEmail() {
@@ -1870,8 +2161,8 @@
                 console.error('Error:', error);
                 loadingEl.style.display = 'none';
                 
-                const subject = '💔 No podré ir - Invitación Tacos y Parque';
-                const body = `Lo siento, no podré asistir.\n\nMi mensaje:\n${reason || '(Sin mensaje)'}\n\n---\nInvitación: Tacos y paseo por el parque\nFecha: Domingo 19 de Enero, 1:00 PM - 7:00 PM`;
+                const subject = '💔 No podré ir - Sorpresa Especial 26 Febrero';
+                const body = `Lo siento, no podré asistir.\n\nMi mensaje:\n${reason || '(Sin mensaje)'}\n\n---\nSorpresa Especial\nJueves 26 de Febrero, 10:00 AM - 10:30 AM`;
                 window.location.href = `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 successEl.style.display = 'block';
                 setTimeout(() => {

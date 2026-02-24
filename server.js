@@ -66,21 +66,21 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
           <div class="container">
             <div class="header">
               <h1>Reserva Confirmada</h1>
-              <p>Tu cita especial esta lista</p>
+              <p>Tu sorpresa especial esta lista</p>
             </div>
             <div class="content">
               <div class="heart">💝</div>
               <p class="message">
-                Hermosa Mabel, tu reserva ha sido confirmada exitosamente.<br><br>
-                Maycol te espera con mucha ilusion para compartir una tarde increible juntos. 
-                Habra makis deliciosos, legos para construir y un paseo navideno que sera inolvidable.
+                Hermosa, tu reserva ha sido confirmada exitosamente.<br><br>
+                Te espera una sorpresa muy especial en un lugar mágico y lleno de aventura. 
+                Será un momento increíble que nunca olvidaremos juntos.
               </p>
               
               <div class="info-box">
                 <h3>Detalles de tu Cita</h3>
-                <p><strong>Fecha:</strong> Martes, 23 de Diciembre 2025</p>
-                <p><strong>Hora:</strong> 4:00 PM - 6:00 PM</p>
-                <p><strong>Actividades:</strong> Makis, Legos y Paseo Navideno</p>
+                <p><strong>Fecha:</strong> Jueves, 26 de Febrero 2026</p>
+                <p><strong>Hora:</strong> 10:00 AM - 10:30 AM</p>
+                <p><strong>Sorpresa:</strong> ¡Un lugar muy especial te espera!</p>
               </div>
               
               <p class="signature">
@@ -101,7 +101,7 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
       await transporter.sendMail({
         from: '"Maycol - Invitacion Especial" <' + EMAIL_USER + '>',
         to: guestEmail,
-        subject: 'Tu Reserva esta Confirmada - Cita del Martes 23',
+        subject: 'Tu Reserva esta Confirmada - Sorpresa del 25 de Febrero',
         html: emailParaMabel
       });
       console.log('Correo enviado a Mabel OK');
@@ -137,11 +137,15 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
             <div class="content">
               <div class="info-row">
                 <span class="label">Fecha</span>
-                <span class="value">Martes, 23 de Diciembre</span>
+                <span class="value">Jueves, 26 de Febrero</span>
               </div>
               <div class="info-row">
                 <span class="label">Hora</span>
-                <span class="value">4:00 PM - 6:00 PM</span>
+                <span class="value">10:00 AM - 10:30 AM</span>
+              </div>
+              <div class="info-row">
+                <span class="label">Sorpresa</span>
+                <span class="value">¡Un lugar mágico nos espera!</span>
               </div>
               <div class="info-row">
                 <span class="label">Correo de Mabel</span>
@@ -181,7 +185,7 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
       // ========== SMS PARA TI ==========
       console.log('Enviando SMS a Maycol...');
       await twilioClient.messages.create({
-        body: 'MABEL HA ACEPTADO! La cita del Martes 23 (4-6PM) esta confirmada. ' + (mensaje ? 'Mensaje: "' + mensaje + '"' : 'Sin mensaje adicional.'),
+        body: 'HA ACEPTADO! La sorpresa del Jueves 26 (10-10:30AM) esta confirmada. ' + (mensaje ? 'Mensaje: "' + mensaje + '"' : 'Sin mensaje adicional.'),
         messagingServiceSid: TWILIO_MESSAGING_SID,
         to: TU_NUMERO
       });
@@ -190,7 +194,7 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
       // ========== SMS PARA MABEL ==========
       console.log('Enviando SMS a Mabel:', NUMERO_MABEL);
       await twilioClient.messages.create({
-        body: 'Hola Mabel! Tu reserva para el Martes 23 de Diciembre (4-6 PM) esta confirmada. Maycol te espera con makis, legos y mucho carino. Nos vemos! - Con amor, Maycol',
+        body: 'Hola! Tu sorpresa especial para el Jueves 26 de Febrero (10-10:30 AM) esta confirmada. Un lugar mágico te espera! Con carino ❤️',
         messagingServiceSid: TWILIO_MESSAGING_SID,
         to: NUMERO_MABEL
       });
