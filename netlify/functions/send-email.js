@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
 
     const TU_EMAIL = 'maycoljhordan07@gmail.com';
     const TU_NUMERO = '+51932387692';
-    const NUMERO_MABEL = '+51932387692';
+    const NUMERO_MABEL = '+51999234643';
 
     // Configurar Gmail
     const transporter = nodemailer.createTransport({
@@ -78,35 +78,35 @@ exports.handler = async (event, context) => {
         <body>
           <div class="container">
             <div class="header">
-              <div class="emoji-large">✨</div>
-              <h1>¡Sorpresa Confirmada!</h1>
-              <p>Tu invitación especial está lista 🎁</p>
+              <div class="emoji-large">💫</div>
+              <h1>Un Suspiro de Amor</h1>
+              <p>Para ti, siempre para ti 🌹</p>
             </div>
             <div class="content">
               <div style="font-size: 50px; margin-bottom: 25px;">💝</div>
               <p class="message">
-                ¡Hola hermosa! Tu aceptación ha sido <strong>confirmada exitosamente</strong>.<br><br>
-                Me emociona mucho poder compartir esta sorpresa especial contigo.
-                Te espera un lugar lleno de magia y aventura con momentos inolvidables.
+                Mi amor, eres la musa de mis pensamientos, la poesía que late en cada rincón de mi alma.<br><br>
+                Te extraño en cada suspiro, en cada línea de código que escribo, en cada momento que respiro. Eres el motivo por el que mis días tienen color y mis noches sentido.<br><br>
+                He planeado cada detalle de esta sorpresa pensando en ti, en tu sonrisa, en esos ojos que iluminan mi universo. Te espera un lugar donde solo existen tú y yo, donde el tiempo se detiene y solo hay amor.
               </p>
               
               <div class="info-box">
-                <h3>📋 Detalles de la Sorpresa</h3>
+                <h3>💫 Nuestro Encuentro Eterno 💫</h3>
                 <div class="info-row">
                   <span class="icon">📅</span>
-                  <span><strong>Fecha:</strong> Jueves 26 de Febrero 2026</span>
+                  <span><strong>El Día:</strong> Jueves 26 de Febrero 2026</span>
                 </div>
                 <div class="info-row">
                   <span class="icon">⏰</span>
-                  <span><strong>Hora:</strong> 10:00 AM - 10:30 AM</span>
+                  <span><strong>La Hora:</strong> 10:00 AM - Un Instante de Infinito</span>
                 </div>
                 <div class="info-row">
-                  <span class="icon">🌟</span>
-                  <span><strong>Lugar:</strong> Un lugar lleno de magia y aventura</span>
+                  <span class="icon">🌹</span>
+                  <span><strong>El Lugar:</strong> Donde Nuestros Corazones Laten Juntos</span>
                 </div>
                 <div class="info-row">
-                  <span class="icon">🎁</span>
-                  <span><strong>Sorpresa:</strong> Algo muy emocionante te espera</span>
+                  <span class="icon">💖</span>
+                  <span><strong>La Sorpresa:</strong> Mi Amor Sin Límites Por Ti</span>
                 </div>
               </div>
               
@@ -118,13 +118,13 @@ exports.handler = async (event, context) => {
               ` : ''}
               
               <div class="signature">
-                Con mucho cariño y esperando verte pronto,<br>
-                <strong>Tu persona favorita 💖</strong>
+                Eres mi eternidad en un suspiro, mi infinito en cada instante.<br>
+                <strong>Te amo con cada latido de mi corazón 💕</strong>
               </div>
             </div>
             <div class="footer">
-              📧 Notificación de confirmación<br>
-              ¡Nos vemos el jueves 26 de Febrero! 🌟
+              En cada código, en cada momento, siempre estás tú.<br>
+              Pronto estarás en mis brazos 🌹
             </div>
           </div>
         </body>
@@ -133,8 +133,8 @@ exports.handler = async (event, context) => {
 
       await transporter.sendMail({
         from: '"Sorpresa Especial 🎁" <' + process.env.EMAIL_USER + '>',
-        to: 'maycoljhordan07@gmail.com',
-        subject: '🎁 Tu Sorpresa Especial está Confirmada - Jueves 26 de Febrero',
+        to: 'mabelmiraval2019@gmail.com',
+        subject: 'Tu Sorpresa Especial está Confirmada - Jueves 26 de Febrero',
         html: emailParaMabel
       });
 
@@ -237,7 +237,7 @@ exports.handler = async (event, context) => {
 
       // ========== SMS PARA MABEL ==========
       await twilioClient.messages.create({
-        body: '💕 ¡Hola! Tu sorpresa especial está confirmada para el Jueves 26 de Febrero (10:00-10:30 AM). Un lugar lleno de magia y aventura te espera. ¡Nos vemos pronto! 🎁',
+        body: '💕 Eres la musa de mis pensamientos, la poesía que late en cada rincón de mi alma. Te extraño en cada suspiro, en cada línea de código que escribo, en cada momento que respiro. Eres mi eternidad 🌹',
         messagingServiceSid: process.env.TWILIO_MESSAGING_SID,
         to: NUMERO_MABEL
       });
